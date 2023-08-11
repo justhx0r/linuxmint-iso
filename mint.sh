@@ -112,7 +112,12 @@ scrcpy \
 apt-transport* \
 ddrescue* \
 encfs \
-cryfs
+cryfs \
+fzf \
+bzr \
+openssh-server \
+tmux \
+htop
 
 systemctl enable tor
 
