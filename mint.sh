@@ -62,7 +62,8 @@ xfburn* \
 hyp* \
 orca* \
 printer-driver* \
-webcam* warpinator* whoopsie* breeze* 
+webcam* warpinator* whoopsie* breeze* \
+transmission-* celluloid* rhythm*
 # Move `/etc/apt/apt.conf.d/01autoremove` away
 #mv /etc/apt/apt.conf.d/01autoremove /root || mv /tmp/01autoremove /root || true
 
