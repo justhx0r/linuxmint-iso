@@ -117,7 +117,7 @@ fzf \
 bzr \
 openssh-server \
 tmux \
-htop
+htop calamares-extensions* calamares-settings-debian calamares
 
 systemctl enable tor
 
@@ -228,7 +228,24 @@ ufw default deny incoming
 sed -i s'/tor+http/http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 sed -i s'/http/tor+http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 apt-get update
-apt-get install $APT_ARGS ubiquity ubiquity-frontend-gtk  enchant-2
+apt-get install $APT_ARGS ubiquity ubiquity-frontend-gtk  ubiquity-casper enchant-2
+
+
+# Configure dns
+touch /etc/dns-enable
+systemctl enable systemd-resolved
+
+# Add lokinet
+cat > /etc/apt/sources.list.d/oxen.list << EOF
+deb [arch=amd64] tor+https://deb.oxen.io lunar main
+EOF
+curl -so /etc/apt/trusted.gpg.d/oxen.gpg https://deb.oxen.io/pub.gpg
+apt-get install $APT_ARGS lokinetmon python3-geoip* lokinet-bin lokinet lokinet-gui
+sed -i s'/#reachable=.*/reachable=false/' /etc/loki/lokinet.ini
+sed -i s'/#upstream=.*/upstream=127.0.0.1/' /etc/loki/lokinet.ini
+sed -i s'/hops=.*/hops=8/' /etc/loki/lokinet.ini
+
+
 # Remove old kernel versions
 KVERSIONS=`apt list --installed 2> /dev/null 0>/dev/null  |grep 'linux-.*.[0-9].*\/' | cut -d " " -f2 | sort -u`
 for old in `for k in $KVERSIONS; do echo $k;done | cut -d '-' -f1 | head -n -1`; do apt-get autopurge $APT_ARGS $old; find / -name "*$old*" -type d -exec rm -rfv {} + 2> /dev/null; done
