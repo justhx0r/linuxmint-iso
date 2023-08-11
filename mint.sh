@@ -1,4 +1,5 @@
 #!/bin/sh
+export DEBIAN_FRONTEND=noninteractive
 for line in `cat /etc/environment`; do export $line;done
 export is_chroot=true
 apt-get install jq curl git gh --no-install-recommends -yq
