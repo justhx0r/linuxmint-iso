@@ -1,0 +1,3 @@
+[submodule "derivative-maker"]
+	path = derivative-maker
+	url = https://github.com/Kicksecure/derivative-maker

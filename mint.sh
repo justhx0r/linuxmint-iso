@@ -62,7 +62,7 @@ xfburn* \
 hyp* \
 orca* \
 printer-driver* \
-wireplumber webcam* warpinator witalian w*german wbrazilian wbritish wspanish wswiss whoopsie* whiptail wfrench wportuguese breeze* 
+webcam* warpinator* whoopsie* breeze* 
 # Move `/etc/apt/apt.conf.d/01autoremove` away
 #mv /etc/apt/apt.conf.d/01autoremove /root || mv /tmp/01autoremove /root || true
 
