@@ -1,0 +1,16 @@
+d-i ubiquity/use_nonfree false
+d-i ubiquity/install_oem false
+d-i debian-installer/locale string en_US
+d-i pkgsel/install-language-support boolean false
+d-i netcfg/get_hostname string host
+d-i netcfg/choose_interface select auto
+d-i partman-auto/method string crypto
+d-i partman-crypto/verify string yes
+d-i partman-auto-lvm/new_vg_name string host-vg
+d-i passwd/root-login boolean false
+d-i user-setup/allow-password-weak boolean false
+d-i passwd/user-default-groups string vboxusers vboxsf users console sudo
+d-i clock-setup/utc boolean true
+d-i time/zone string UTC
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean false
