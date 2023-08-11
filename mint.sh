@@ -218,8 +218,8 @@ systemctl enable ufw
 ufw default deny incoming
 
 # Configure apt->tor
-sed -i s'/tor+http/http/' /etc/apt/sources.list* /etc/apt/sources.list.d/* && \
-sed -i s'/http/tor+http/' /etc/apt/sources.list* /etc/apt/sources.list.d/* && \
+sed -i s'/tor+http/http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
+sed -i s'/http/tor+http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 apt-get update
 
 # Cleanup
