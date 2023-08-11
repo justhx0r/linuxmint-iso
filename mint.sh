@@ -222,7 +222,10 @@ sed -i s'/tor+http/http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 sed -i s'/http/tor+http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 apt-get update
 
-# Cleanup
+# Remove old kernel versions
+KVERSIONS=`apt list --installed 2> /dev/null 0>/dev/null  |grep 'linux-.*.[0-9].*\/' | cut -d " " -f2 | sort -u`
+for old in `for k in $KVERSIONS; do echo $k;done | cut -d '-' -f1 | head -n -1`; do apt-get autopurge $APT_ARGS $old; find / -name "*$old*" -type d -exec rm -rfv {} + 2> /dev/null; done
+ # Cleanup
 find / -type f -name '*.deb*' -exec rm -rfv {} + 2> /dev/null
 echo 'Cleaned Debian Packages'
 find / -type f -name '*.log*' -exec rm -rfv {} + 2> /dev/null
