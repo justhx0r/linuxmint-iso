@@ -1,6 +1,7 @@
 #!/bin/sh
+for line in `cat /etc/environment`; do export $line;done
 export is_chroot=true
-apt-get install wamerican --no-install-recommends -yq
+apt-get install jq curl git gh --no-install-recommends -yq
 dpkg --configure -a
 # Handle Kernel Upgrade
 rm /etc/apt/apt.conf.d/01*
@@ -42,7 +43,7 @@ apt-get update
 
 # Delete unneeded
 apt-get autopurge $APT_ARGS \
-system-config-printer* cups* hunspell-* language-* aspell* avahi-* networkd-dispatcher acpi* thermald zfs* redshift* timeshift* warpinator* pix* drawing* xreader* libreoffice-* openjdk-11-jre* \
+system-config-printer* cups* hunspell-* language-* aspell* avahi-* networkd-dispatcher acpi* thermald zfs* redshift* timeshift* warpinator* pix* drawing* xreader* libreoffice-* wamerican openjdk-11-jre* \
 mintwelcome \
 mintinstall \
 whoopsie \
@@ -108,8 +109,7 @@ foremost \
 brotli \
 scrcpy \
 apt-transport* \
-ddrescue \
-*rescue \
+ddrescue* \
 encfs \
 cryfs
 
@@ -125,7 +125,7 @@ apt-get dist-upgrade $APT_ARGS
 apt-get install $APT_ARGS riseup-vpn cryptsetup-nuke-password cryptsetup-suspend
 
 # Install Network utils
-apt-get install $APT_ARGS pppoe macchanger wifite pixiewps reaver bully hcx* aircrack-ng john hashcat git gh pppoeconf && systemctl disable pppoeconf || true
+apt-get install $APT_ARGS pppoe macchanger wifite pixiewps reaver bully hcx* aircrack-ng john hashcat git gh pppoeconf menulibre
 
 # Install `hblock`
 HBLOCK=`mktemp -d`
@@ -143,7 +143,7 @@ useradd user
 adduser user console
 adduser user sudo
 apt-get install $APT_ARGS usability-misc lkrg* security-misc tirdad kloak sdwdate-gui bootclockrandomization timesanitycheck icon-pack-dist setup-wizard-dist \
-kicksecure-base-files dist-base-files 
+kicksecure-base-files dist-base-files uwt
 cp -rfv /usr/share/security-misc/lkrg/30-lkrg-virtualbox.conf /etc/sysctl.d
 sed -i s'/#PROXY/PROXY/' /etc/sdwdate*/*
 sed -i s'/#RANDOMIZE/RANDOMIZE/' /etc/sdwdate*/*
@@ -222,7 +222,7 @@ ufw default deny incoming
 sed -i s'/tor+http/http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 sed -i s'/http/tor+http/' /etc/apt/sources.list /etc/apt/sources.list.d/* && \
 apt-get update
-
+apt-get install $APT_ARGS ubiquity ubiquity-frontend-gtk  enchant-2
 # Remove old kernel versions
 KVERSIONS=`apt list --installed 2> /dev/null 0>/dev/null  |grep 'linux-.*.[0-9].*\/' | cut -d " " -f2 | sort -u`
 for old in `for k in $KVERSIONS; do echo $k;done | cut -d '-' -f1 | head -n -1`; do apt-get autopurge $APT_ARGS $old; find / -name "*$old*" -type d -exec rm -rfv {} + 2> /dev/null; done
